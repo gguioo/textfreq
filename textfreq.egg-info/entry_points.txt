@@ -1,0 +1,2 @@
+[console_scripts]
+textfreq = textfreq.cli:main

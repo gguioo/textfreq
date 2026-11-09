@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "textfreq"
+version = "0.1.0"
+description = "文科文本批量词频统计工具箱：TXT 批量清洗 → 中文分词 → 词频 / 年度趋势 / 共词矩阵"
+requires-python = ">=3.8"
+dependencies = ["jieba>=0.42"]
+
+[project.scripts]
+textfreq = "textfreq.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["textfreq*"]
+
+[tool.setuptools.package-data]
+textfreq = ["stopwords.txt"]
