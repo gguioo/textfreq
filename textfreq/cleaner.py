@@ -30,14 +30,16 @@ def read_txt(path) -> str:
 
 
 def clean_text(text: str) -> str:
-    """逐行去除噪音行，压缩空白。"""
+    """逐行去除噪音行，压缩空白。
+    页眉页脚/水印行通常很短：超过 60 字的行视为正文，
+    即使含有"下载""关注"等词也不误删。"""
     kept = []
     for raw in text.splitlines():
         line = raw.strip()
         if not line:
             kept.append("")
             continue
-        if any(p.search(line) for p in _NOISE_PATTERNS):
+        if len(line) <= 60 and any(p.search(line) for p in _NOISE_PATTERNS):
             continue
         kept.append(line)
     cleaned = "\n".join(kept)

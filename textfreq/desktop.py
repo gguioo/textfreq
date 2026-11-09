@@ -10,26 +10,15 @@ from pathlib import Path
 from .cleaner import load_corpus
 from .segment import load_stopwords, load_userdict
 from .analyze import word_freq, yearly_trend, cooccurrence_matrix, save_csv
+from .cli import run_all
 
 
 def run_stats(folder, outdir, top=100, cooc_top=30, stopwords=None, userdict=None):
-    """纯计算部分：返回 (词频行, 年度趋势行或None, 共词矩阵行)，并写出 CSV。"""
-    corpus = load_corpus(folder)
-    stop = load_stopwords(stopwords)
-    load_userdict(userdict)
-
-    freq = word_freq(corpus, stop)
-    rows_freq = [["排名", "词语", "频次"]] + [
-        [i, w, c] for i, (w, c) in enumerate(freq.most_common(top), 1)]
-    rows_trend = yearly_trend(corpus, stop)
-    rows_cooc = cooccurrence_matrix(corpus, stop, cooc_top)
-
-    outdir = Path(outdir)
-    save_csv(rows_freq, outdir / "词频总表.csv")
-    if rows_trend:
-        save_csv(rows_trend, outdir / "年度趋势.csv")
-    save_csv(rows_cooc, outdir / "共词矩阵.csv")
-    return corpus, rows_freq, rows_trend, rows_cooc
+    """跑全部统计（含搭配表、词汇多样性等新表），返回四项主要结果。"""
+    corpus, rf, rt, rc, coll, div, kw = run_all(
+        folder, outdir, top=top, cooc_top=cooc_top,
+        stopwords=stopwords, userdict=userdict)
+    return corpus, rf, rt, rc
 
 
 def main():

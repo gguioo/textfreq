@@ -24,7 +24,8 @@ def word_freq(corpus, stopwords, topn=100):
 
 
 def yearly_trend(corpus, stopwords, topn=30):
-    """文件名含年份时，输出 {年份: Counter}；否则返回 None。"""
+    """文件名含年份时，输出 {年份: Counter}；否则返回 None。
+    每年额外给出行「_当年总词数_」，方便按占比看趋势，避免各年语料量不均。"""
     from .segment import segment
     by_year = {}
     for fname, text in corpus:
@@ -40,8 +41,14 @@ def yearly_trend(corpus, stopwords, topn=30):
         top.update(c)
     words = [w for w, _ in top.most_common(topn)]
     rows = [["词语"] + [str(y) for y in years] + ["合计"]]
+    totals = {y: sum(by_year[y].values()) for y in years}
+    rows.append(["_当年总词数_"] + [totals[y] for y in years] + [sum(totals.values())])
     for w in words:
         row = [w] + [by_year[y].get(w, 0) for y in years]
+        # 每万词频率：消除各年语料量差异
+        norm = ["%.2f" % (by_year[y].get(w, 0) / totals[y] * 10000) if totals[y] else "0"
+                for y in years]
+        row = row + ["(" + n + ")" for n in norm]
         row.append(sum(by_year[y].get(w, 0) for y in years))
         rows.append(row)
     return rows
@@ -52,8 +59,7 @@ def cooccurrence_matrix(corpus, stopwords, topn=30):
     from .segment import segment
     counts = Counter()
     for _, text in corpus:
-        tokens = set(segment(text, stopwords))
-        counts.update(tokens)
+        counts.update(set(segment(text, stopwords)))
     words = [w for w, _ in counts.most_common(topn)]
     n = len(words)
     matrix = [[0] * n for _ in range(n)]

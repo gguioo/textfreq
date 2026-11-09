@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: textfreq
-Version: 0.1.0
+Version: 0.3.0
 Summary: 文科文本批量词频统计工具箱：TXT 批量清洗 → 中文分词 → 词频 / 年度趋势 / 共词矩阵
 Requires-Python: >=3.8
 License-File: LICENSE
