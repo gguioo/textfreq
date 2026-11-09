@@ -22,7 +22,15 @@ def main(argv=None):
     run.add_argument("--stopwords", help="自定义停用词文件（每行一词）")
     run.add_argument("--userdict", help="自定义领域词表（每行一词，可带词频词性）")
 
+    gui = sub.add_parser("gui", help="启动本地可视化界面（自动打开浏览器）")
+    gui.add_argument("--port", type=int, default=8765)
+
     args = ap.parse_args(argv)
+
+    if args.cmd == "gui":
+        from .gui import serve
+        serve(port=args.port)
+        return
 
     corpus = load_corpus(args.folder)
     print(f"[1/4] 读入并清洗 {len(corpus)} 个文件")
