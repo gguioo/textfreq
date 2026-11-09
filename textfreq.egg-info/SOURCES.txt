@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+textfreq/__init__.py
+textfreq/analyze.py
+textfreq/cleaner.py
+textfreq/cli.py
+textfreq/segment.py
+textfreq/stopwords.txt
+textfreq.egg-info/PKG-INFO
+textfreq.egg-info/SOURCES.txt
+textfreq.egg-info/dependency_links.txt
+textfreq.egg-info/entry_points.txt
+textfreq.egg-info/requires.txt
+textfreq.egg-info/top_level.txt
