@@ -5,6 +5,7 @@ textfreq/__init__.py
 textfreq/analyze.py
 textfreq/cleaner.py
 textfreq/cli.py
+textfreq/gui.py
 textfreq/segment.py
 textfreq/stopwords.txt
 textfreq.egg-info/PKG-INFO

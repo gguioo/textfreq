@@ -17,10 +17,20 @@ textfreq 把这些全部打包：
 ## 安装
 
 ```bash
-pip install -e .
+pip install git+https://github.com/gguioo/textfreq.git
 ```
 
-## 用法
+Windows 用户：先装 [Python 3.8+](https://www.python.org/downloads/)（安装时勾选 "Add Python to PATH"），然后打开「命令提示符」粘贴上面那行安装命令即可。
+
+## 用法一：可视化界面（推荐）
+
+```bash
+textfreq gui
+```
+
+会自动打开浏览器：填 TXT 文件夹路径 → 点「开始统计」→ 页面直接出高频词条形图、年度趋势折线图、共词矩阵预览，三份 CSV 点链接就能下载。关掉命令行窗口即退出。
+
+## 用法二：命令行
 
 ```bash
 # 最简单：整批 TXT 跑完整统计，输出到 textfreq_out/
@@ -42,6 +52,11 @@ textfreq run 知网导出文件夹 \
 | `词频总表.csv` | 全语料词频排名（默认前 100） |
 | `年度趋势.csv` | 文件名含年份（如 `2010.txt`）时按年份 × 词语计数 |
 | `共词矩阵.csv` | 前 N 高频词的文档级共现次数，是共词网络图 / 关联图的直接原料 |
+
+## 图表风格
+
+界面内的条形图与趋势图为同一套淡雅学术风（米白底、赭红/藏蓝主色），导出 CSV 后
+也可用 matplotlib / ggplot2 按同款配色重绘并输出矢量 PDF（配套出图模板规划中）。
 
 ## 文件命名建议
 
